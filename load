@@ -1,0 +1,530 @@
+-- ColaCat Cheat UI for Roblox Bedwars - ANGRY CAT EDITION
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "ColasCatUI"
+screenGui.ResetOnSpawn = false
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+screenGui.Parent = playerGui
+
+-- Main Frame
+local mainFrame = Instance.new("Frame")
+mainFrame.Name = "MainFrame"
+mainFrame.Size = UDim2.new(0, 500, 0, 700)
+mainFrame.Position = UDim2.new(0.5, -250, 0.5, -350)
+mainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+mainFrame.BorderColor3 = Color3.fromRGB(100, 50, 150)
+mainFrame.BorderSizePixel = 2
+mainFrame.Parent = screenGui
+mainFrame.Active = true
+mainFrame.Draggable = true
+
+-- Title Section
+local titleLabel = Instance.new("Frame")
+titleLabel.Name = "Title"
+titleLabel.Size = UDim2.new(1, 0, 0, 50)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.BackgroundColor3 = Color3.fromRGB(100, 50, 150)
+titleLabel.BorderSizePixel = 0
+titleLabel.Parent = mainFrame
+
+local titleText = Instance.new("TextLabel")
+titleText.Name = "TitleText"
+titleText.Size = UDim2.new(1, -40, 1, 0)
+titleText.BackgroundTransparency = 1
+titleText.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleText.TextSize = 20
+titleText.Font = Enum.Font.GothamBold
+titleText.Text = "⚡ Welcome To ColaCat ⚡"
+titleText.Parent = titleLabel
+
+-- Close Button
+local closeButton = Instance.new("TextButton")
+closeButton.Name = "CloseButton"
+closeButton.Size = UDim2.new(0, 40, 0, 40)
+closeButton.Position = UDim2.new(1, -45, 0, 5)
+closeButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+closeButton.BorderSizePixel = 0
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.TextSize = 20
+closeButton.Font = Enum.Font.GothamBold
+closeButton.Text = "✕"
+closeButton.Parent = titleLabel
+closeButton.ZIndex = 10
+
+closeButton.MouseButton1Click:Connect(function()
+	mainFrame.Visible = false
+end)
+
+local betaLabel = Instance.new("TextLabel")
+betaLabel.Name = "BetaLabel"
+betaLabel.Size = UDim2.new(1, -20, 0, 35)
+betaLabel.Position = UDim2.new(0, 10, 0, 55)
+betaLabel.BackgroundTransparency = 1
+betaLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+betaLabel.TextSize = 12
+betaLabel.Font = Enum.Font.Gotham
+betaLabel.Text = "🔬 This is just BETA TEST\nWe are revolutionizing the whole world of cheats"
+betaLabel.TextWrapped = true
+betaLabel.Parent = mainFrame
+
+-- Target Username Label
+local targetUsernameLabel = Instance.new("TextLabel")
+targetUsernameLabel.Name = "TargetUsernameLabel"
+targetUsernameLabel.Size = UDim2.new(1, -20, 0, 20)
+targetUsernameLabel.Position = UDim2.new(0, 10, 0, 95)
+targetUsernameLabel.BackgroundTransparency = 1
+targetUsernameLabel.TextColor3 = Color3.fromRGB(255, 200, 100)
+targetUsernameLabel.TextSize = 12
+targetUsernameLabel.Font = Enum.Font.GothamBold
+targetUsernameLabel.Text = "Target Account:"
+targetUsernameLabel.Parent = mainFrame
+
+-- Target Username Input
+local targetInput = Instance.new("TextBox")
+targetInput.Name = "TargetInput"
+targetInput.Size = UDim2.new(1, -20, 0, 35)
+targetInput.Position = UDim2.new(0, 10, 0, 115)
+targetInput.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+targetInput.BorderColor3 = Color3.fromRGB(150, 100, 200)
+targetInput.BorderSizePixel = 1
+targetInput.TextColor3 = Color3.fromRGB(200, 255, 200)
+targetInput.PlaceholderColor3 = Color3.fromRGB(100, 100, 120)
+targetInput.PlaceholderText = "Enter target username..."
+targetInput.TextSize = 13
+targetInput.Font = Enum.Font.Gotham
+targetInput.ClearTextOnFocus = false
+targetInput.Parent = mainFrame
+
+-- Usable Commands Header
+local commandsHeader = Instance.new("TextLabel")
+commandsHeader.Name = "CommandsHeader"
+commandsHeader.Size = UDim2.new(1, -20, 0, 25)
+commandsHeader.Position = UDim2.new(0, 10, 0, 160)
+commandsHeader.BackgroundTransparency = 1
+commandsHeader.TextColor3 = Color3.fromRGB(255, 200, 100)
+commandsHeader.TextSize = 14
+commandsHeader.Font = Enum.Font.GothamBold
+commandsHeader.Text = "📋 USABLE COMMANDS:"
+commandsHeader.Parent = mainFrame
+
+-- Funny popup messages
+local popupMessages = {
+	"WHOOPS... COULDN'T LOAD 😅",
+	"YOU GOT HACKED!!! HAHAHAHA 🤣",
+	"ERROR 404: BRAIN NOT FOUND",
+	"SYSTEM OVERLOAD (just kidding)",
+	"DELETING HOMEWORK FOLDER... JK",
+	"⚠️ CRITICAL FAILURE ⚠️",
+	"INSTALLING COMMON SENSE... FAILED",
+	"ROBLOX.EXE HAS STOPPED",
+	"this is fine 🔥 🐶",
+	"HACKED BY COLACAT (not really)",
+	"VIRUS DETECTED (it's just vibes)",
+	"Your PC has been compromised! (lol)",
+	"SKYNET ACTIVATED (pretty cool right?)",
+	"SHUTTING DOWN IN 5... 4... 3... jk"
+}
+
+-- Popup positions (7 at once, scattered)
+local popupPositions = {
+	{xPercent = 0.1, yPercent = 0.1},
+	{xPercent = 0.7, yPercent = 0.15},
+	{xPercent = 0.5, yPercent = 0.4},
+	{xPercent = 0.15, yPercent = 0.6},
+	{xPercent = 0.75, yPercent = 0.5},
+	{xPercent = 0.25, yPercent = 0.75},
+	{xPercent = 0.65, yPercent = 0.75}
+}
+
+-- Function to create angry cat modal
+local function showAngryCat()
+	local angryCatGui = Instance.new("ScreenGui")
+	angryCatGui.Name = "AngryCatGui"
+	angryCatGui.ResetOnSpawn = false
+	angryCatGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	angryCatGui.Parent = playerGui
+	
+	-- Background overlay
+	local bgOverlay = Instance.new("Frame")
+	bgOverlay.Name = "BGOverlay"
+	bgOverlay.Size = UDim2.new(1, 0, 1, 0)
+	bgOverlay.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	bgOverlay.BackgroundTransparency = 0.7
+	bgOverlay.BorderSizePixel = 0
+	bgOverlay.Parent = angryCatGui
+	bgOverlay.ZIndex = 1000
+	
+	-- Main content frame
+	local contentFrame = Instance.new("Frame")
+	contentFrame.Name = "ContentFrame"
+	contentFrame.Size = UDim2.new(0, 500, 0, 400)
+	contentFrame.Position = UDim2.new(0.5, -250, 0.5, -200)
+	contentFrame.BackgroundTransparency = 1
+	contentFrame.Parent = angryCatGui
+	contentFrame.ZIndex = 1001
+	
+	-- Cat emoji
+	local catEmoji = Instance.new("TextLabel")
+	catEmoji.Name = "CatEmoji"
+	catEmoji.Size = UDim2.new(1, 0, 0, 120)
+	catEmoji.Position = UDim2.new(0, 0, 0, 20)
+	catEmoji.BackgroundTransparency = 1
+	catEmoji.TextColor3 = Color3.fromRGB(255, 255, 255)
+	catEmoji.TextSize = 100
+	catEmoji.Font = Enum.Font.GothamBold
+	catEmoji.Text = "😾"
+	catEmoji.Parent = contentFrame
+	
+	-- Message frame
+	local messageFrame = Instance.new("Frame")
+	messageFrame.Name = "MessageFrame"
+	messageFrame.Size = UDim2.new(1, 0, 0, 150)
+	messageFrame.Position = UDim2.new(0, 0, 0, 130)
+	messageFrame.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+	messageFrame.BorderColor3 = Color3.fromRGB(255, 255, 0)
+	messageFrame.BorderSizePixel = 3
+	messageFrame.Parent = contentFrame
+	
+	local messageLabel = Instance.new("TextLabel")
+	messageLabel.Name = "Message"
+	messageLabel.Size = UDim2.new(1, -20, 1, -20)
+	messageLabel.Position = UDim2.new(0, 10, 0, 10)
+	messageLabel.BackgroundTransparency = 1
+	messageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+	messageLabel.TextSize = 32
+	messageLabel.Font = Enum.Font.GothamBold
+	messageLabel.Text = "NOTHING WILL WORK\nUNLESS YOU PAY"
+	messageLabel.TextWrapped = true
+	messageLabel.Parent = messageFrame
+	
+	-- Subtext
+	local subtext = Instance.new("TextLabel")
+	subtext.Name = "Subtext"
+	subtext.Size = UDim2.new(1, 0, 0, 40)
+	subtext.Position = UDim2.new(0, 0, 0, 280)
+	subtext.BackgroundTransparency = 1
+	subtext.TextColor3 = Color3.fromRGB(255, 255, 0)
+	subtext.TextSize = 28
+	subtext.Font = Enum.Font.GothamBold
+	subtext.Text = "baka~"
+	subtext.Parent = contentFrame
+	
+	-- OK Button
+	local okButton = Instance.new("TextButton")
+	okButton.Name = "OKButton"
+	okButton.Size = UDim2.new(0, 120, 0, 40)
+	okButton.Position = UDim2.new(0.5, -60, 1, -50)
+	okButton.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+	okButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	okButton.BorderSizePixel = 2
+	okButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+	okButton.TextSize = 16
+	okButton.Font = Enum.Font.GothamBold
+	okButton.Text = "OK :("
+	okButton.Parent = contentFrame
+	okButton.ZIndex = 1002
+	
+	okButton.MouseButton1Click:Connect(function()
+		angryCatGui:Destroy()
+	end)
+	
+	-- Auto-remove after 8 seconds
+	task.delay(8, function()
+		if angryCatGui.Parent then
+			angryCatGui:Destroy()
+		end
+	end)
+end
+
+-- Function to create classic Windows error popup
+local function createPopup(xPercent, yPercent)
+	local randomMessage = popupMessages[math.random(1, #popupMessages)]
+	
+	-- Blur overlay
+	local blurOverlay = Instance.new("Frame")
+	blurOverlay.Name = "BlurOverlay"
+	blurOverlay.Size = UDim2.new(1, 0, 1, 0)
+	blurOverlay.Position = UDim2.new(0, 0, 0, 0)
+	blurOverlay.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	blurOverlay.BackgroundTransparency = 0.4
+	blurOverlay.BorderSizePixel = 0
+	blurOverlay.Parent = screenGui
+	blurOverlay.ZIndex = 150
+	
+	local popupFrame = Instance.new("Frame")
+	popupFrame.Name = "WindowsPopup"
+	popupFrame.Size = UDim2.new(0, 320, 0, 160)
+	popupFrame.Position = UDim2.new(xPercent, -160, yPercent, -80)
+	popupFrame.BackgroundColor3 = Color3.fromRGB(192, 192, 192)
+	popupFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	popupFrame.BorderSizePixel = 2
+	popupFrame.Parent = screenGui
+	popupFrame.ZIndex = 200
+	
+	-- Title bar
+	local titleBar = Instance.new("Frame")
+	titleBar.Name = "TitleBar"
+	titleBar.Size = UDim2.new(1, 0, 0, 20)
+	titleBar.Position = UDim2.new(0, 0, 0, 0)
+	titleBar.BackgroundColor3 = Color3.fromRGB(0, 0, 128)
+	titleBar.BorderSizePixel = 0
+	titleBar.Parent = popupFrame
+	
+	local titleBarText = Instance.new("TextLabel")
+	titleBarText.Name = "TitleText"
+	titleBarText.Size = UDim2.new(1, -20, 1, 0)
+	titleBarText.Position = UDim2.new(0, 5, 0, 0)
+	titleBarText.BackgroundTransparency = 1
+	titleBarText.TextColor3 = Color3.fromRGB(255, 255, 255)
+	titleBarText.TextSize = 11
+	titleBarText.Font = Enum.Font.GothamBold
+	titleBarText.Text = "System message"
+	titleBarText.TextXAlignment = Enum.TextXAlignment.Left
+	titleBarText.Parent = titleBar
+	
+	local closeBtn = Instance.new("TextButton")
+	closeBtn.Name = "CloseBtn"
+	closeBtn.Size = UDim2.new(0, 16, 0, 14)
+	closeBtn.Position = UDim2.new(1, -18, 0, 3)
+	closeBtn.BackgroundColor3 = Color3.fromRGB(192, 192, 192)
+	closeBtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	closeBtn.BorderSizePixel = 1
+	closeBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+	closeBtn.TextSize = 10
+	closeBtn.Font = Enum.Font.GothamBold
+	closeBtn.Text = "✕"
+	closeBtn.Parent = titleBar
+	closeBtn.ZIndex = 201
+	
+	local function dismissPopup()
+		blurOverlay:Destroy()
+		popupFrame:Destroy()
+	end
+	
+	closeBtn.MouseButton1Click:Connect(function()
+		dismissPopup()
+		showAngryCat()
+	end)
+	
+	-- Content frame
+	local contentFrame = Instance.new("Frame")
+	contentFrame.Name = "Content"
+	contentFrame.Size = UDim2.new(1, -10, 1, -80)
+	contentFrame.Position = UDim2.new(0, 5, 0, 25)
+	contentFrame.BackgroundTransparency = 1
+	contentFrame.Parent = popupFrame
+	
+	-- Red X Icon
+	local iconFrame = Instance.new("Frame")
+	iconFrame.Name = "IconFrame"
+	iconFrame.Size = UDim2.new(0, 40, 0, 40)
+	iconFrame.Position = UDim2.new(0, 5, 0, 8)
+	iconFrame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+	iconFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	iconFrame.BorderSizePixel = 1
+	iconFrame.Parent = contentFrame
+	
+	local xIcon = Instance.new("TextLabel")
+	xIcon.Name = "XIcon"
+	xIcon.Size = UDim2.new(1, 0, 1, 0)
+	xIcon.BackgroundTransparency = 1
+	xIcon.TextColor3 = Color3.fromRGB(255, 255, 255)
+	xIcon.TextSize = 24
+	xIcon.Font = Enum.Font.GothamBold
+	xIcon.Text = "✕"
+	xIcon.Parent = iconFrame
+	
+	-- Message text
+	local messageLabel = Instance.new("TextLabel")
+	messageLabel.Name = "Message"
+	messageLabel.Size = UDim2.new(1, -60, 0, 50)
+	messageLabel.Position = UDim2.new(0, 50, 0, 5)
+	messageLabel.BackgroundTransparency = 1
+	messageLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+	messageLabel.TextSize = 12
+	messageLabel.Font = Enum.Font.GothamBold
+	messageLabel.Text = randomMessage
+	messageLabel.TextWrapped = true
+	messageLabel.TextXAlignment = Enum.TextXAlignment.Left
+	messageLabel.TextYAlignment = Enum.TextYAlignment.Top
+	messageLabel.Parent = contentFrame
+	
+	-- OK Button
+	local okButton = Instance.new("TextButton")
+	okButton.Name = "OKButton"
+	okButton.Size = UDim2.new(0, 65, 0, 22)
+	okButton.Position = UDim2.new(0.5, -32, 1, -28)
+	okButton.BackgroundColor3 = Color3.fromRGB(192, 192, 192)
+	okButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	okButton.BorderSizePixel = 1
+	okButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+	okButton.TextSize = 11
+	okButton.Font = Enum.Font.GothamBold
+	okButton.Text = "Ok"
+	okButton.Parent = popupFrame
+	okButton.ZIndex = 201
+	
+	okButton.MouseButton1Click:Connect(function()
+		dismissPopup()
+		showAngryCat()
+	end)
+	okButton.MouseEnter:Connect(function()
+		okButton.BackgroundColor3 = Color3.fromRGB(220, 220, 220)
+	end)
+	okButton.MouseLeave:Connect(function()
+		okButton.BackgroundColor3 = Color3.fromRGB(192, 192, 192)
+	end)
+	
+	-- Auto-remove after 5 seconds if not clicked
+	task.delay(5, function()
+		if popupFrame.Parent then
+			dismissPopup()
+		end
+	end)
+end
+
+-- Function to create 7 popups at once
+local function createMultiplePopups()
+	for i, pos in ipairs(popupPositions) do
+		task.delay(i * 0.1, function()
+			createPopup(pos.xPercent, pos.yPercent)
+		end)
+	end
+end
+
+-- Feature buttons array
+local features = {
+	{name = "🛫 FLY", successRate = "10-20%"},
+	{name = "🏊 SWIM", successRate = "40-50%"},
+	{name = "💥 FLING", successRate = "5%"},
+	{name = "👻 PHASE", successRate = "40%"}
+}
+
+local buttonSize = 110
+local buttonsPerRow = 4
+local yPos = 190
+
+for i, feature in ipairs(features) do
+	local col = ((i - 1) % buttonsPerRow)
+	local row = math.floor((i - 1) / buttonsPerRow)
+	
+	local featureButton = Instance.new("TextButton")
+	featureButton.Name = feature.name
+	featureButton.Size = UDim2.new(0, buttonSize, 0, 55)
+	featureButton.Position = UDim2.new(0, 10 + (col * 120), 0, yPos + (row * 65))
+	featureButton.BackgroundColor3 = Color3.fromRGB(50, 50, 70)
+	featureButton.BorderColor3 = Color3.fromRGB(100, 200, 255)
+	featureButton.BorderSizePixel = 1
+	featureButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+	featureButton.TextSize = 11
+	featureButton.Font = Enum.Font.GothamBold
+	featureButton.Text = feature.name .. "\n" .. feature.successRate
+	featureButton.Parent = mainFrame
+	
+	featureButton.MouseEnter:Connect(function()
+		featureButton.BackgroundColor3 = Color3.fromRGB(70, 70, 100)
+	end)
+	featureButton.MouseLeave:Connect(function()
+		featureButton.BackgroundColor3 = Color3.fromRGB(50, 50, 70)
+	end)
+	
+	featureButton.MouseButton1Click:Connect(function()
+		createMultiplePopups()
+		featureButton.BorderColor3 = Color3.fromRGB(100, 255, 100)
+		featureButton.Text = feature.name .. " ✓\n" .. feature.successRate
+		task.wait(0.3)
+		featureButton.BorderColor3 = Color3.fromRGB(100, 200, 255)
+		featureButton.Text = feature.name .. "\n" .. feature.successRate
+	end)
+end
+
+-- More Coming Soon
+local moreLabel = Instance.new("TextLabel")
+moreLabel.Name = "MoreLabel"
+moreLabel.Size = UDim2.new(1, -20, 0, 30)
+moreLabel.Position = UDim2.new(0, 10, 0, 360)
+moreLabel.BackgroundColor3 = Color3.fromRGB(40, 40, 55)
+moreLabel.BorderColor3 = Color3.fromRGB(200, 100, 100)
+moreLabel.BorderSizePixel = 1
+moreLabel.TextColor3 = Color3.fromRGB(255, 150, 150)
+moreLabel.TextSize = 13
+moreLabel.Font = Enum.Font.GothamBold
+moreLabel.Text = "🚀 MORE WILL BE RELEASED SOON!"
+moreLabel.Parent = mainFrame
+
+-- Premium Section
+local premiumFrame = Instance.new("Frame")
+premiumFrame.Name = "PremiumFrame"
+premiumFrame.Size = UDim2.new(1, -20, 0, 110)
+premiumFrame.Position = UDim2.new(0, 10, 0, 400)
+premiumFrame.BackgroundColor3 = Color3.fromRGB(80, 30, 120)
+premiumFrame.BorderColor3 = Color3.fromRGB(255, 215, 0)
+premiumFrame.BorderSizePixel = 2
+premiumFrame.Parent = mainFrame
+
+local premiumTitle = Instance.new("TextLabel")
+premiumTitle.Name = "PremiumTitle"
+premiumTitle.Size = UDim2.new(1, 0, 0, 25)
+premiumTitle.Position = UDim2.new(0, 0, 0, 0)
+premiumTitle.BackgroundColor3 = Color3.fromRGB(100, 40, 150)
+premiumTitle.TextColor3 = Color3.fromRGB(255, 215, 0)
+premiumTitle.TextSize = 14
+premiumTitle.Font = Enum.Font.GothamBold
+premiumTitle.Text = "👑 PREMIUM - 80% SUCCESS RATE"
+premiumTitle.BorderSizePixel = 0
+premiumTitle.Parent = premiumFrame
+
+local premiumInfo = Instance.new("TextLabel")
+premiumInfo.Name = "PremiumInfo"
+premiumInfo.Size = UDim2.new(1, -10, 0, 60)
+premiumInfo.Position = UDim2.new(0, 5, 0, 30)
+premiumInfo.BackgroundTransparency = 1
+premiumInfo.TextColor3 = Color3.fromRGB(255, 255, 200)
+premiumInfo.TextSize = 11
+premiumInfo.Font = Enum.Font.Gotham
+premiumInfo.Text = "💰 Price: $40 USD\n🎁 Use code: Halloweed (2.67% off)\n📧 DM deleteduser_259297542 to purchase"
+premiumInfo.TextWrapped = true
+premiumInfo.Parent = premiumFrame
+
+local premiumButton = Instance.new("TextButton")
+premiumButton.Name = "PremiumButton"
+premiumButton.Size = UDim2.new(0.8, 0, 0, 25)
+premiumButton.Position = UDim2.new(0.1, 0, 0, 80)
+premiumButton.BackgroundColor3 = Color3.fromRGB(255, 215, 0)
+premiumButton.BorderSizePixel = 0
+premiumButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+premiumButton.TextSize = 12
+premiumButton.Font = Enum.Font.GothamBold
+premiumButton.Text = "BUY PREMIUM"
+premiumButton.Parent = premiumFrame
+
+premiumButton.MouseEnter:Connect(function()
+	premiumButton.BackgroundColor3 = Color3.fromRGB(255, 240, 100)
+end)
+premiumButton.MouseLeave:Connect(function()
+	premiumButton.BackgroundColor3 = Color3.fromRGB(255, 215, 0)
+end)
+
+premiumButton.MouseButton1Click:Connect(function()
+	createMultiplePopups()
+	premiumButton.Text = "Contact: deleteduser_259297542"
+	task.wait(2)
+	premiumButton.Text = "BUY PREMIUM"
+end)
+
+-- Toggle visibility with INSERT key
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+	if input.KeyCode == Enum.KeyCode.Insert then
+		mainFrame.Visible = not mainFrame.Visible
+	end
+end)
+
+print("✓ ColaCat ANGRY CAT MODE loaded. Press INSERT to toggle. Click buttons to unleash chaos!")
